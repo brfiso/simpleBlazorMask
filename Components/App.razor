@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="/" />
+    <link rel="stylesheet" href="bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="app.css" />
+    <link rel="stylesheet" href="simpleBlazorMask.styles.css" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <HeadOutlet />
+</head>
+
+<body>
+    <Routes />
+    <script src="_framework/blazor.web.js"></script>
+    <script type="text/javascript">
+        window.applyMask = (id, mask) => {
+            console.log(id);
+            console.log(mask)
+            var input = document.getElementById(id);
+
+            input.addEventListener('input', function (event) {
+                var value = event.target.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+                var maskedValue = '';
+                var maskIndex = 0;
+
+                for (var i = 0; i < value.length; i++) {
+                    if (maskIndex >= mask.length) {
+                        break;
+                    }
+                    if (mask[maskIndex] === '0') {
+                        maskedValue += value[i];
+                        maskIndex++;
+                    } else {
+                        while (maskIndex < mask.length && mask[maskIndex] !== '0') {
+                            maskedValue += mask[maskIndex];
+                            maskIndex++;
+                        }
+                        maskedValue += value[i];
+                        maskIndex++;
+                    }
+                }
+                event.target.value = maskedValue;
+            });
+        }
+    </script>
+</body>
+
+</html>

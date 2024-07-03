@@ -1,0 +1,47 @@
+﻿@page "/"
+@using Microsoft.JSInterop
+@inject IJSRuntime Js
+@rendermode InteractiveServer
+
+<PageTitle>Simple Blazor Mask</PageTitle>
+
+<h1>Máscara com JS</h1>
+
+<p>
+    Esse exemplo aplica máscaras em inputs com Javascript.
+</p>
+<div class="row">
+    <div class="col-md-4 mt-3">
+        <div class="form-group mb-3">
+            <label>Telefone: </label>
+            <input type="text" class="form-control" id="txtTelefone" placeholder="(00) 00000-0000" />
+        </div>
+        <div class="form-group mb-3">
+            <label>CPF: </label>
+            <input type="text" class="form-control" id="txtCPF" placeholder="000.000.000-00" />
+        </div>
+        <div class="form-group mb-3">
+            <label>Data: </label>
+            <input type="text" class="form-control" id="txtData" placeholder="00/00/0000" />
+        </div>
+        <div class="form-group mb-3">
+            <label>Horário: </label>
+            <input type="text" class="form-control" id="txtHorario" placeholder="00:00" />
+        </div>
+    </div>
+</div>
+
+@code {
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await Js.InvokeVoidAsync("applyMask", "txtTelefone", "(00) 00000-0000");
+            await Js.InvokeVoidAsync("applyMask", "txtCPF", "000.000.000-00");
+            await Js.InvokeVoidAsync("applyMask", "txtData", "00/00/0000");
+            await Js.InvokeVoidAsync("applyMask", "txtHorario", "00:00");
+        }
+    }
+}
